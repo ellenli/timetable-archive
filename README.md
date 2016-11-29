@@ -4,6 +4,6 @@ This repo holds the _earliest iterations_ of unpublished frontend developments f
 
 View these iterations via this repo and http://ellen.li/timetable-archive.
 
-For the latest (experimental) frontend, check out [the *timetable* repo](https://github.com/ellenli/timetable).
+For the latest (experimental) frontend, check out [my timetable repo](https://github.com/ellenli/timetable).
 
 Thanks for dropping by.
