@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The Timetable Generator</title>
+      
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--- <script src="js/bootstrap.min.js"></script> --- inserted in footer ---->
+    
+    <!-- Select2 -->
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+    <link href="select2/select2.css" rel="stylesheet"/>
+    <link href="select2/select2-bootstrap-2.css" rel="stylesheet"/>
+    <script src="select2/select2.js"></script>
+    <script>
+        $(document).ready(function() { $("#selection").select2({
+          placeholder: "Select a course..",
+          formatNoMatches: function(term) {return "";},
+        }); });
+    </script>
+      
+      <!-- Modals -->
+          <script type="text/javascript">
+                  $(function(){
+                        $('#trigger-about').click(function(){
+                          $('#about').modal('show');
+                          return false;
+                        })
+                    });
+                                $(function(){
+                        $('#trigger-faq').click(function(){
+                          $('#faq').modal('show');
+                          return false;
+                        })
+                    });
+                                $(function(){
+                        $('#trigger-contact').click(function(){
+                          $('#contact').modal('show');
+                          return false;
+                        })
+                    });
+              jQuery(function($) {
+    $('form[data-async]').live('submit', function(event) {
+        var $form = $(this);
+        var $target = $($form.attr('data-target'));
+ 
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+ 
+            success: function(data, status) {
+                $target.html(data);
+            }
+        });
+ 
+        event.preventDefault();
+    });
+});
+        </script>
+
+
+    <!-- Misc -->
+    <style type="text/css">
+        /* Customizations */
+            @media (min-width: 1200px) {
+                .container{
+                    max-width: 1100px;
+                }
+                .table {
+                    max-width: inherit; 
+                    /* table-layout: fixed; */
+                }
+            }
+        .container{
+                    min-width: 960px;
+                }
+        table th, table td { text-align: center; }
+        .course-container {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0px solid #ccc;
+            text-align: center;
+        }
+        .course-details {
+            background: #f4f4f4;
+            display: table-cell;
+            padding: 15px;
+            position: absolute;
+            margin-top:auto;
+            margin-bottom:auto;
+            vertical-align: middle;
+            border-bottom: 0px solid #ccc;
+            width: 100%;
+            height: 73px; /* 73 occupies 2 cells */
+            white-space: nowrap;
+            z-index: 2;
+        }
+        .course-details:hover {
+            background: #fffbe9;
+        }
+        .course-code {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: auto;
+        }
+        .time-loc {
+            display: block;
+            font-size: 11px;
+            line-height: 25px;
+        }
+
+    </style>
+  </head>
+  <body><div id="wrap">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">The Timetable Generator</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" class="active" data-toggle="dropdown">McMaster University <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">University of Western Ontario</a></li>
+            <li><a href="#">University of Toronto</a></li>
+            <li><a href="#">Carleton University</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Other...</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" class="active" data-toggle="dropdown">Term 1 <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Term 2</a></li>
+            <li><a href="#">Term 3</a></li>
+          </ul>
+        </li>
+      </ul>
+<div class="nav navbar-nav navbar-left input-group">
+      <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+              
+              <select id="selection" class="form-control select2-multiple" style="width:250px;">
+                  <option></option>
+                 <optgroup label="Anthropology">
+                    <option value="AK">ANTHRO 1AA3</option>
+                    <option value="HI">ANTHRO 1BA3</option>
+                </optgroup>
+                <optgroup label="Art">
+                    <option value="CA">ART 1DM3</option>
+                    <option value="NV">ART 1MI3</option>
+                </optgroup>
+                <optgroup label="Art History">
+                    <option value="AZ">ART HIST 1A03</option>
+                    <option value="CO">ART HIST 1AA3</option>
+                    <option value="ID">ART HIST 2A03</option>
+                </optgroup>
+                <optgroup label="Arts & Science">
+                    <option value="AL">ARTS&SCI 1A06</option>
+                    <option value="AR">ARTS&SCI 1B06</option>
+                    <option value="IL">ARTS&SCI 1C06</option>
+                    <option value="IA">ARTS&SCI 1D06</option>
+                    <option value="KS">ARTS&SCI 2A06</option>
+                </optgroup>
+            </select>
+              
+            <span class="input-group-btn"><button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button></span>
+          </div>
+      </form>
+ </div>
+        
+      <ul class="nav navbar-nav navbar-right" style="margin-right: -30px;">
+        <form class="navbar-form navbar-left" role="meta">
+            <div class="btn-group">
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-wrench"></span></button>
+                      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></button>
+                </div>
+      </form>
+      </ul>
+    </div>
+  </div>
+</nav>
+      <div class="container">
+    <div class="timetable" style="margin:70px -15px 70px 0px; position:relative;">
+    <table class="table table-hover table-bordered" style="text-align:center;z-index:1;">
+      <thead>
+        <tr>
+          <th class="col-sm-1" style="width: 10%;"></th>
+          <th class="col-lg-2" style="width: 15%;">Monday</th>
+          <th class="col-sm-2" style="width: 15%;">Tuesday</th>
+          <th class="col-sm-2" style="width: 15%;">Wednesday</th>
+          <th class="col-sm-2" style="width: 15%;">Thursday</th>
+          <th class="col-sm-2" style="width: 15%;">Friday</th>
+          <th class="col-sm-2" style="width: 15%;">Saturday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>08:00</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+          <tr>
+          <td>08:30</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;">            <div class="course-container">
+            <div class="course-details" style="height:110px;padding:35px 15px 35px 15px;">
+                <span class="course-code">BIO 1A03</span>
+                <span class="label label-warning">L10</span>
+                <span class="time-loc">8:30 to 9:50 in CNH/106</span>  
+            </div>
+            </div>
+              </td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+          <tr>
+          <td>09:00</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;">
+            <div class="course-container">
+            <div class="course-details">
+                <span class="course-code">BIO 1A03</span>
+                <span class="label label-primary">C02</span>
+                <span class="time-loc">9:00 to 9:50 in CNH/106</span>  
+            </div>
+            </div>
+              </td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+          <tr>
+          <td>09:30</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;">
+                          <div class="course-container">
+            <div class="course-details">
+                <span class="course-code">BIO 1A03</span>
+                <span class="label label-info">T02</span>
+                <span class="time-loc">9:30 to 10:20 in CNH/106</span>  
+            </div>
+            </div>
+              </td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+          <tr>
+          <td>10:00</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+                    <tr>
+          <td>10:30</td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+          <td style="padding:0px; height: 37px;"></td>
+        </tr>
+      </tbody>
+    </table>
+              
+  </div>
+
+  </div></div>
+    
+
+      
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="margin-bottom:0px;">
+  <div class="container">
+    <p class="navbar-text"><span class="text-muted credit" style="font-size: 11px;">Facebook / Donate</span></p>
+
+          <div class="navbar-right"><p class="navbar-text"><span class="text-muted credit" style="font-size: 11px;">
+              <a href="#" id="trigger-about">About</a> / <a href="#" id="trigger-faq">FAQ</a> / <a href="#" id="trigger-contact">Contact</a></span></p></div>
+  </div>
+</nav>
+      
+<!-- Modals -->
+      
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">About the Timetable Generator</h4>
+      </div>
+      <div class="modal-body">
+        The Timetable Generator is designed to help you create a timetable based on publicly available class scheduling information at specific universities. <br /><br />
+For the latest updates, like The Quintessential Timetable Generator on Facebook.</div>
+          <div class="modal-footer" style="text-align:center; margin-top:-10px;">
+        <span class="text-muted credit">Created by <a>Dillon Dixon</a> and Designed by <a>Ellen Li</a></span>
+      </div>
+   
+    </div>
+  </div>
+</div>
+      
+      <div class="modal fade" id="faq" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Frequently Asked Questions</h4>
+      </div>
+      <div class="modal-body">
+       <strong>Can I add my school?</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non justo vitae sem varius gravida.
+          <br /><br />
+          <strong>Can I add salt?</strong> Cras pretium sagittis mi nec laoreet. Nullam consequat fringilla risus, eu adipiscing justo adipiscing in. Ut ultricies libero sed turpis pulvinar mollis. Phasellus iaculis nulla id mauris tempor faucibus. Pellentesque ac lacus varius, accumsan ligula eget, fermentum elit. Aliquam at sem diam. Ut vitae facilisis dolor.
+          <br /><br />
+          <strong>Can I add numbers?</strong> Duis ac commodo tortor.
+        
+        </div>
+   
+    </div>
+  </div>
+</div>
+      
+            <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
+      </div>
+  <div class="modal-body">
+      
+<form role="form">
+    <div class="form-group">
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Name">
+  </div>
+  <div class="form-group">
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email Address">
+  </div>
+      <div class="form-group">
+<textarea class="form-control" rows="7" placeholder="Questions, comments, or suggestions? ..."></textarea>      
+  </div>
+  
+    </div>
+  
+          <div class="modal-footer" style="margin-top:-10px;">
+    <button type="button" class="btn btn-primary">Send</button></form>
+  </div>
+   
+    </div>
+  </div>
+</div>
+
+<!-- necessary for dropdown menu functionality --->
+<script src="js/bootstrap.min.js"></script>    
+</body>
+</html>

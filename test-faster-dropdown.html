@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>JSON Sample</title>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/lodash.min.js"></script>
+    <script src="select2/select2.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.css"></script>
+    <script>
+var data = [];
+var tac = 'tac';
+
+for(var i = 0; i < 90000; i++){
+    data.push({id: ""+i, text: ""+tac+i});
+    tac = (tac=='tac')?'tác':'tac';
+}
+
+$("input").select2({
+  initSelection: function(element, callback) {
+    var selection = _.find(data, function(metric){ 
+      return metric.id === element.val();
+    })
+    callback(selection);
+  },
+  query: function(options){
+    var pageSize = 100;
+    var startIndex  = (options.page - 1) * pageSize;
+    var filteredData = data;
+    var stripDiacritics = window.Select2.util.stripDiacritics;
+
+    if( options.term && options.term.length > 0 ){
+      if( !options.context ){
+        var term = stripDiacritics(options.term.toLowerCase());
+        options.context = data.filter( function(metric){
+          //since data is very big... save the stripDiacritics result for later
+          //to speed up next search.
+          //this does modify the original array!
+          if ( !metric.stripped_text ) {
+            metric.stripped_text = stripDiacritics(metric.text.toLowerCase());
+          }
+          return (metric.stripped_text.indexOf(term) !== -1);
+        });
+      }
+      filteredData = options.context;
+    }
+
+    options.callback({
+      context: filteredData,
+      results: filteredData.slice(startIndex, startIndex + pageSize),
+      more: (startIndex + pageSize) < filteredData.length
+    });
+  },
+  placeholder: "Select a metric"
+});
+
+    </script>
+</head>
+<body>
+    
+    <input type="hidden" value="10" >
+</body>
+</html>

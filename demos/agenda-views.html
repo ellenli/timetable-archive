@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../js/jquery-1.9.1.js'></script>
+<script src='../lib/jquery-ui.custom.min.js'></script>
+<script src='../fullcalendar/fullcalendar.js'></script>
+<script>
+
+	$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: '',
+				center: '',
+				right: ''
+			},
+			editable: true,
+			events: [
+				
+				{
+					title: 'BIO 1A03',
+					start: new Date(y, m, d, 13, 30),
+                    type: 'C02',
+                    location: 'CNH 104',
+					allDay: false
+				},
+				{
+					title: 'BIO 1A03',
+					start: new Date(y, m, d-2, 12, 30),
+                    type: 'T02',
+                    location: 'CNH 104',
+					allDay: false
+				},
+				{
+					title: 'BIO 1A03',
+					start: new Date(y, m, d+1, 9, 30),
+                    end: new Date(y, m, d+1, 11, 30),
+                    type: 'L12',
+                    location: 'CNH 104',
+					allDay: false
+				},
+			]
+		});
+		
+	});
+
+</script>
+<style>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 14px;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+
+</style>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>
